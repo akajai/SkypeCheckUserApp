@@ -11,18 +11,18 @@ using SKYPE4COMLib;
 using System.Diagnostics;
 namespace SkypeCheckUserApp
 {
-   
+
     public partial class Form1 : Form
     {
 
-
+        public SKYPE4COMLib.Skype skypeMain;
+        List<String> emailids = new List<String>();
+        int totalemailids = 0;
         public Form1()
         {
             InitializeComponent();
             textBoxoutputFIleName.Text = "D:\\out.txt";
             textBoxinput.Text = "D:\\1.txt";
-            textBoxskypeusername.Text = "check_user1";
-            textBoxskypepassword.Text = "check_user1";
         }
 
         private void inputBrowse_Click(object sender, EventArgs e)
@@ -35,148 +35,170 @@ namespace SkypeCheckUserApp
                 }
                 else
                 {
-                    MessageBox.Show("File Not Present");
+                    LogError("File Not Present");
                 }
             }
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBoxoutputFIleName.Text.Length == 0)
-            {
-                MessageBox.Show("Output File Name  Is Empty ");
-            }
-            
-            if (textBoxinput.Text.Length == 0)
-            {
-                MessageBox.Show("Input File Name  Is Empty ");
-            }
-            if (File.Exists(textBoxoutputFIleName.Text))
-            {
-                MessageBox.Show("File Already Present ");
-                //return;
-            }
-            try
-            {
-                System.Diagnostics.Process process = new Process();
-                
-                Skype skype = new Skype();
 
-                
-                if (skype.Client.IsRunning)
+            if (buttonStart.Text == "Start")
+            {
+                if (textBoxoutputFIleName.Text.Length == 0)
                 {
-                    Console.WriteLine("Skype is running");
+                    LogError("Output File Name  Is Empty ");
+
+                    return;
+                }
+
+                if (textBoxinput.Text.Length == 0)
+                {
+                    LogError("Input File Name  Is Empty ");
+                    return;
+                }
+                if (File.Exists(textBoxoutputFIleName.Text))
+                {
+                    LogError("File Already Present ");
+                    //return;
+                }
+                if (IsFileInUse(textBoxinput.Text))
+                {
+                    LogError("Input File is Not Acessible");
+                    return;
+                }
+                skypeMain = new Skype();
+                if (skypeMain.Client.IsRunning)
+                {
+                    LogError("Skype is running",false);
                     //skype.Client.Start(true, true);
                 }
                 else
                 {
-//                    Console.WriteLine("Skype is not running so starting skype and login in ");
-//                    //process.WaitForInputIdle("skype.exe /username:" + textBoxskypeusername + "/password:" + textBoxskypepassword);
-
-//                    //System.Diagnostics.Process.Start("C:/Program Files/Skype/Phone/Skype.exe"+" /username:" + textBoxskypeusername + "/password:" + textBoxskypepassword);
-//                    process.StartInfo = new ProcessStartInfo();
-
-//                    process.StartInfo.FileName = @"C:\Program Files\Skype\Phone\Skype.exe";
-//                    process.StartInfo.Verb = "Skype.exe";
-//                   process.StartInfo.CreateNoWindow = true;
-//                    process.StartInfo.Domain = "Domain";
-//                    process.EnableRaisingEvents = true;
-//                    process.StartInfo.UseShellExecute = false;
-//                    //process.StartInfo.LoadUserProfile = true;
-//                    //process.StartInfo.Arguments=" /username:" + textBoxskypeusername + "/password:" + textBoxskypepassword;
-//                    //process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-//                    //process.StartInfo.RedirectStandardOutput = true;
-//                    process.StartInfo.UserName = textBoxskypeusername.Text;
-                    
-//                   //// process.StartInfo.Password.Clear();
-//                   // Console.WriteLine("Skype Username");
-
-//                   // //process.StartInfo.Password.AppendChar('c');
-//                   // //process.StartInfo.Password.AppendChar('h');
-//                   // //process.StartInfo.Password.AppendChar('e');
-//                   // //process.StartInfo.Password.AppendChar('c');
-//                   // //process.StartInfo.Password.AppendChar('k');
-//                   // //process.StartInfo.Password.AppendChar('_');
-//                   // //process.StartInfo.Password.AppendChar('u');
-//                   // //process.StartInfo.Password.AppendChar('s');
-//                   // //process.StartInfo.Password.AppendChar('e');
-//                   // //process.StartInfo.Password.AppendChar('r');
-//                   // //process.StartInfo.Password.AppendChar('1');
-
-//                    for (int i = 0; i < textBoxskypepassword.Text.Length; i++)
-//                    {
-//                        process.StartInfo.Password.AppendChar(textBoxskypepassword.Text.ToString()[i]);
-//                    }
-////                    Console.WriteLine("Password " + process.StartInfo.Password.ToString());
-//                    //process.WaitForInputIdle();
-//                    //process.StartInfo.WorkingDirectory = @"C:\Program Files\Skype\Phone";
-//                    Console.WriteLine("Skype Started");
+                    LogError("Skype is not running. Please login to Skype");
+                    return;
                 }
-                // wait for the client to be connected and ready
-                //skype.Timeout = 1000;
-                
-                
                 //skype.Attach(6, true);
-                skype.Attach(skype.Protocol, false);
+                skypeMain.Attach(skypeMain.Protocol, false);
                 ////skype.SilentMode.
                 ////
-                Console.WriteLine("Skype Version" + skype.Version);
-                //Console.WriteLine("Enter a skype name to search for: ");
-                //string username = Console.ReadLine();
-                 //Read the file and display it line by line.
-                int counter = 0;
+                LogError("Skype Version" + skypeMain.Version, false);
+                totalemailids = 0;
                 string line;
-                List<String> emailids= new List<String>();
-                
-                System.IO.StreamReader file =new System.IO.StreamReader(textBoxinput.Text);
+                System.IO.StreamReader file = new System.IO.StreamReader(textBoxinput.Text);
                 while ((line = file.ReadLine()) != null)
                 {
-                 //   Console.WriteLine(line);
                     emailids.Add(line);
-                    counter++;
+                    totalemailids++;
                 }
                 file.Close();
-                Console.WriteLine("emailids Count " + emailids.Count);
-                 Dictionary<string, string> datalist = new Dictionary<string, string>();
-                List<String> validemailids= new List<String>();
-                
 
+                toolStripProgressBar1.Value = 0;
+                toolStripProgressBar1.Maximum = totalemailids;
+                if (backgroundWorker1.IsBusy != true)
+                {
+                    // Start the asynchronous operation.
+                    backgroundWorker1.RunWorkerAsync();
+                }
+                // buttonStart.Text = "Stop";
+                
+            }
+            else
+            {
+                if (backgroundWorker1.WorkerSupportsCancellation == true)
+                {
+                    // Cancel the asynchronous operation.
+                    backgroundWorker1.CancelAsync();
+                    backgroundWorker1.Dispose();
+                    LogError("Operation Cancelled");
+
+                    buttonStart.Text = "Start";
+                }
+
+                
+            }
+
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                Dictionary<string, string> datalist = new Dictionary<string, string>();
+                int index = 0;
                 foreach (String emailid in emailids)
                 {
                     System.IO.StreamWriter outputfile = new System.IO.StreamWriter(textBoxoutputFIleName.Text, true);
-                    foreach (User user in skype.SearchForUsers(emailid))
+                    foreach (User user in skypeMain.SearchForUsers(emailid))
                     {
-
-                        Console.WriteLine(emailid + " : " + user.FullName);
-                        validemailids.Add(emailid);
-                        outputfile.WriteLine(emailid + " : " + user.Aliases +" : " + user.DisplayName+ " : " + user.FullName);
+                        //outputfile.WriteLine(emailid + " : " + user.Aliases +" : " + user.DisplayName+ " : " + user.FullName);
+                        outputfile.WriteLine(emailid + " : " + user.FullName + " : " + user.Handle);
                     }
+                    LogError(emailid+" - ("+ index + "/" + totalemailids+")", false);
                     outputfile.Close();
-                }
-                
-                
-                //System.IO.StreamWriter outputfile = new System.IO.StreamWriter(textBoxoutputFIleName.Text);
-                //for (int j = 0; j < validemailids.Count; j++)
-                //{
-                //    outputfile.WriteLine(validemailids[j].ToString());
-                //}
-                //outputfile.Close();
+                    index++;
+                    backgroundWorker1.ReportProgress(index);
 
-                
-                
+                }
+
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Excelption " + ex.Message);
+                LogError("Excelption " + ex.Message);
             }
 
-            
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            // LogError("ProgressChanged",false);
+            toolStripProgressBar1.Value = e.ProgressPercentage;
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolStripProgressBar1.Value = 0;
+            if (e.Cancelled == true)
+            {
+                LogError("Canceled");
+            }
+            else if (e.Error != null)
+            {
+                LogError("Error: " + e.Error.Message);
+            }
+            else
+            {
+                LogError("Done!");
+            }
+
+
+        }
+       
+        public bool IsFileInUse(string path)
+        {
+            try
+            {
+                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read)) { }
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public void LogError(String str, Boolean showMessageBox = true)
+        {
+            if (showMessageBox)
+            {
+                MessageBox.Show(str);
+            }
+            toolStripStatusLabel1.Text = str;
+
         }
     }
 }
