@@ -1,0 +1,13 @@
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\Interop.SKYPE4COMLib.dll
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\SkypeCheckUserApp.csproj.ResolveComReference.cache
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\SkypeCheckUserApp.Form1.resources
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\SkypeCheckUserApp.Properties.Resources.resources
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\bin\Debug\SkypeCheckUserApp.exe.config
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\bin\Debug\SkypeCheckUserApp.exe
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\bin\Debug\SkypeCheckUserApp.pdb
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\SkypeCheckUserApp.exe
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\SkypeCheckUserApp.pdb
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\bin\Debug\Interop.SKYPE4COMLib.dll
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\users\user\documents\visual studio 2010\Projects\SkypeCheckUserApp\SkypeCheckUserApp\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
